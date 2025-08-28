@@ -1,0 +1,22 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile.web
+    env_file: .env
+    environment:
+      - NODE_ENV=production
+    ports:
+      - "${WEB_PORT:-3000}:3000"
+    depends_on:
+      - conductor
+
+  conductor:
+    build:
+      context: .
+      dockerfile: apps/conductor/Dockerfile.conductor
+    env_file: .env
+    environment:
+      - NODE_ENV=production
+    ports:
+      - "${CONDUCTOR_PORT:-8787}:8787"

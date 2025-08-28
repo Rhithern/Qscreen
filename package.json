@@ -1,0 +1,30 @@
+{
+  "name": "interview-platform",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -k -n WEB,CONDUCTOR -c green,blue \"pnpm --filter @ai-interviewer/web dev\" \"pnpm --filter @ai-interviewer/conductor dev\"",
+    "build": "pnpm -r build",
+    "start": "concurrently -k -n WEB,CONDUCTOR -c green,blue \"pnpm --filter @ai-interviewer/web start\" \"pnpm --filter @ai-interviewer/conductor start\"",
+    "bg:start": "dotenv -e .env pm2 start ecosystem.config.js && pm2 save && pm2 status",
+    "bg:stop": "pm2 stop all && pm2 save",
+    "bg:logs": "pm2 logs",
+    "compose:up": "docker compose up -d",
+    "compose:down": "docker compose down",
+    "compose:logs": "docker compose logs -f",
+    "lint": "pnpm -r lint",
+    "type-check": "pnpm -r type-check",
+    "postinstall": "pnpm build"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "dotenv-cli": "^7.3.0",
+    "pm2": "^5.3.1",
+    "typescript": "^5.3.0",
+    "@types/node": "^20.10.0"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "packageManager": "pnpm@8.15.4"
+}

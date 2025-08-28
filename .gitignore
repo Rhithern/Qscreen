@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+**/node_modules/
+.pnpm-store/
+
+# Build output
+.turbo/
+.next/
+**/.next/
+dist/
+build/
+
+# Env files
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+logs/
+
+# IDE/OS files
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
