@@ -1,10 +1,10 @@
 [variables]
 NIXPACKS_NO_CACHE = '1'
 NIXPACKS_METADATA = "node=20,pnpm=latest"
-FORCE_REBUILD = "2024-12-31-v8"
+FORCE_REBUILD = "2024-12-31-v9"
 
 [phases.setup]
-nixPkgs = ["nodejs-20_x", "pnpm"]
+nixPkgs = ["nodejs_20", "pnpm"]
 
 [phases.install]
 cmds = [
