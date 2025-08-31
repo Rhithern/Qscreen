@@ -4,8 +4,8 @@ FROM node:20-alpine
 # Install system dependencies
 RUN apk add --no-cache curl
 
-# Install pnpm
-RUN npm install -g pnpm@8.15.4
+# Install pnpm (force cache bust)
+RUN npm install -g pnpm@8.15.4 && echo "Cache bust: $(date)"
 
 # Set working directory
 WORKDIR /app
@@ -16,8 +16,8 @@ COPY apps/server/package.json ./apps/server/
 COPY packages/embed-sdk/package.json ./packages/embed-sdk/
 COPY packages/shared/package.json ./packages/shared/
 
-# Install dependencies with fallback
-RUN pnpm install --frozen-lockfile || pnpm install --no-frozen-lockfile
+# Install dependencies (skip frozen lockfile for Railway compatibility)
+RUN pnpm install --no-frozen-lockfile
 
 # Copy source code
 COPY . .
