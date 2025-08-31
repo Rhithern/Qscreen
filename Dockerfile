@@ -1,26 +1,23 @@
 # Use Node.js 20 Alpine for smaller image size
 FROM node:20-alpine
 
-# Install system dependencies
-RUN apk add --no-cache curl
+# Force cache invalidation with build arg
+ARG CACHEBUST=1
 
-# Install pnpm (force cache bust)
-RUN npm install -g pnpm@8.15.4 && echo "Cache bust: $(date)"
+# Install system dependencies and pnpm in one layer
+RUN apk add --no-cache curl && \
+    npm install -g pnpm@8.15.4 && \
+    echo "Build timestamp: $(date)" && \
+    echo "Cache bust: $CACHEBUST"
 
 # Set working directory
 WORKDIR /app
 
-# Copy package files
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY apps/server/package.json ./apps/server/
-COPY packages/embed-sdk/package.json ./packages/embed-sdk/
-COPY packages/shared/package.json ./packages/shared/
-
-# Install dependencies (skip frozen lockfile for Railway compatibility)
-RUN pnpm install --no-frozen-lockfile
-
-# Copy source code
+# Copy all files at once to break cache
 COPY . .
+
+# Install dependencies without frozen lockfile
+RUN pnpm install --no-frozen-lockfile
 
 # Build the application
 RUN pnpm run build:railway
