@@ -5,9 +5,15 @@ import cors from 'cors';
 const app: Express = express();
 const PORT = parseInt(process.env.PORT || '3001', 10);
 
+// Get allowed origins from environment
+const getAllowedOrigins = () => {
+  const origins = process.env.ALLOWED_ORIGINS || 'http://localhost:3000';
+  return origins.split(',').map(origin => origin.trim());
+};
+
 // Basic middleware
 app.use(cors({
-  origin: '*',
+  origin: getAllowedOrigins(),
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true
 }));
@@ -38,8 +44,8 @@ app.get('/health', (req, res) => {
 // Basic embed config endpoint
 app.get('/api/embed/config', (req, res) => {
   res.json({
-    wsUrl: `wss://your-app.railway.app`,
-    appUrl: `https://your-app.railway.app`,
+    wsUrl: process.env.CONDUCTOR_WS_URL || `wss://app.quickscreening.cam/api/ws`,
+    appUrl: process.env.NEXT_PUBLIC_APP_URL || `https://app.quickscreening.cam`,
     version: '1.0.0'
   });
 });
