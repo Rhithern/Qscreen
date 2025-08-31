@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import { WebSocketServer } from 'ws';
@@ -5,14 +6,11 @@ import { createServer } from 'http';
 import { InterviewSession } from './session';
 import { logger } from './logger';
 import { config } from './config';
+import { extractTokenFromRequest, verifyEmbedToken } from './auth';
 
 const app = express();
 const server = createServer(app);
-const wss = new WebSocketServer({ 
-  server,
-  // Handling the upgrade ourselves for better control
-  noServer: true 
-});
+const wss = new WebSocketServer({ noServer: true });
 
 // CORS middleware
 app.use(cors({
@@ -23,8 +21,13 @@ app.use(cors({
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.json({ 
-    status: 'ok',
-    timestamp: new Date().toISOString()
+    ok: true,
+    status: 'healthy',
+    timestamp: new Date().toISOString(),
+    port: config.CONDUCTOR_PORT,
+    uptimeSeconds: Math.floor(process.uptime()),
+    originsAllowedCount: config.ALLOWED_ORIGINS.length,
+    version: '1.0.0'
   });
 });
 
@@ -53,15 +56,41 @@ server.on('upgrade', (request, socket, head) => {
     return;
   }
 
+  // JWT Authentication for embed tokens
+  const token = extractTokenFromRequest(request);
+  let tokenPayload = null;
+  
+  if (token) {
+    tokenPayload = verifyEmbedToken(token);
+    if (!tokenPayload) {
+      logger.warn({
+        message: 'WebSocket connection rejected - invalid JWT token',
+        origin,
+        ip: request.socket.remoteAddress
+      });
+
+      socket.write('HTTP/1.1 401 Unauthorized\r\n' +
+                  'Content-Type: application/json\r\n' +
+                  '\r\n' +
+                  JSON.stringify({
+                    error: 'Invalid token',
+                    message: 'JWT token is invalid or expired'
+                  }));
+      socket.destroy();
+      return;
+    }
+  }
+
   // Handle upgrade for allowed origins
   wss.handleUpgrade(request, socket, head, (ws) => {
     logger.info({
       message: 'WebSocket connection established',
       origin,
-      ip: request.socket.remoteAddress
+      ip: request.socket.remoteAddress,
+      authenticated: !!tokenPayload
     });
 
-    const session = new InterviewSession(ws);
+    const session = new InterviewSession(ws, tokenPayload);
     
     ws.on('message', async (data) => {
       try {

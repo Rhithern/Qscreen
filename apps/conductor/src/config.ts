@@ -6,14 +6,22 @@ const envSchema = z.object({
   CONDUCTOR_PORT: z.coerce.number().int().positive().default(8787),
   ALLOWED_ORIGINS: z.string()
     .transform(str => str.split(',').map(s => s.trim()))
-    .pipe(z.array(z.string().url()).min(1))
+    .pipe(z.array(z.string().min(1)).min(1))
     .default('http://localhost:3000')
     .describe('Comma-separated list of allowed WebSocket origins'),
   
+  // JWT Secret for embed tokens
+  EMBED_JWT_SECRET: z.string().optional(),
+  NEXTAUTH_SECRET: z.string().optional(),
+  
   // Supabase
-  NEXT_PUBLIC_SUPABASE_URL: z.string().url(),
-  NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string(),
-  SUPABASE_SERVICE_ROLE_KEY: z.string(),
+  SUPABASE_URL: z.string().url().optional(),
+  SUPABASE_SERVICE_ROLE_KEY: z.string().optional(),
+  
+  // External APIs (optional for development)
+  DEEPGRAM_API_KEY: z.string().optional(),
+  ELEVENLABS_API_KEY: z.string().optional(),
+  OPENAI_API_KEY: z.string().optional(),
 });
 
 // Type for the validated config

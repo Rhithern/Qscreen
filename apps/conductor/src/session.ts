@@ -1,4 +1,4 @@
-import { WebSocket } from 'ws';
+import { WebSocket, RawData } from 'ws';
 import { ClientEvent, ClientEventSchema, ServerEvent, LLMResponse } from '@ai-interviewer/shared';
 import { logger } from './logger';
 import { validateSession, getInterviewData, saveResponse, updateSession } from './supabase';
@@ -6,6 +6,7 @@ import { generateResponse } from './llm';
 import { DeepgramClient } from './deepgram';
 import { ElevenLabsClient } from './elevenlabs';
 import { VoiceActivityDetector } from './vad';
+import { EmbedTokenPayload } from './auth';
 
 export class InterviewSession {
   private ws: WebSocket;
@@ -25,12 +26,19 @@ export class InterviewSession {
   private currentTranscript: string = '';
   private sessionId: string | null = null;
 
-  constructor(ws: WebSocket) {
+  constructor(ws: WebSocket, tokenPayload?: EmbedTokenPayload | null) {
     this.ws = ws;
     this.vad = new VoiceActivityDetector();
+    
+    // If we have token payload, pre-populate session data
+    if (tokenPayload) {
+      this.sessionId = tokenPayload.session_id;
+      this.interviewId = tokenPayload.interview_id || null;
+      this.candidateId = tokenPayload.candidate_id || null;
+    }
   }
 
-  async handleMessage(data: WebSocket.Data) {
+  async handleMessage(data: RawData) {
     try {
       const message = JSON.parse(data.toString());
       const event = ClientEventSchema.parse(message);
@@ -276,7 +284,7 @@ export class InterviewSession {
     }
   }
 
-  private sendError(message: string) {
+  public sendError(message: string) {
     this.sendEvent({
       type: 'ERROR',
       message

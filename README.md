@@ -1,21 +1,130 @@
 # Interview Platform
 
-A modern interview platform built with Next.js and WebSocket.
+A production-ready interview management platform built with Next.js, TypeScript, and WebSocket technology. Features multi-tenant support, role-based access control, real-time communication, and comprehensive email notifications.
 
-## Environment Setup
+## 🚀 Quick Start
 
-Required environment variables:
+Get the interview platform running in under 5 minutes:
+
+### 1. Prerequisites
+- **Node.js 20+** and **pnpm 8+** installed
+- **Supabase project** with database URL and anon key
+
+### 2. One-Command Setup
 ```bash
-# Supabase
-NEXT_PUBLIC_SUPABASE_URL=your-project-url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+# Clone and setup environment files
+pnpm setup
 
-# Web
-WEB_PORT=3000                    # Optional, defaults to 3000
+# Install dependencies and start both services
+pnpm up
+```
 
-# Conductor
-CONDUCTOR_PORT=8787              # Optional, defaults to 8787
-ALLOWED_ORIGINS=http://localhost:3000  # Optional, defaults to web URL
+### 3. Configure Your Keys
+Edit the generated `.env` files with your Supabase credentials:
+- `apps/web/.env.local` - Add your Supabase URL and anon key
+- `apps/conductor/.env` - Configure allowed origins
+
+### 4. Seed Demo Data (Optional)
+```bash
+# Create demo tenant, users, and interview
+pnpm seed:dev
+```
+
+### 5. Verify Everything Works
+```bash
+# Run health checks and smoke tests
+pnpm doctor
+pnpm verify
+```
+
+**🎉 Done!** Visit http://localhost:3000 to access the platform.
+
+### Quick Commands Reference
+```bash
+pnpm setup     # Setup environment files
+pnpm up        # Install deps + start services
+pnpm dev:all   # Start both web and conductor
+pnpm seed:dev  # Create demo data
+pnpm doctor    # Check system health
+pnpm verify    # Run smoke tests
+pnpm test:e2e  # Run end-to-end tests
+```
+
+## 📋 Features
+
+- **Multi-tenant Architecture**: Complete subdomain and custom domain support
+- **Role-based Access Control**: Employer, HR, and Candidate user roles
+- **Real-time Interviews**: WebSocket-powered live interview sessions
+- **Email Notifications**: Professional email templates for invitations and updates
+- **Responsive Design**: Mobile-first UI with accessibility features
+- **Production Ready**: PM2 process management and Docker support
+
+## 🏗️ Architecture
+
+### Tech Stack
+- **Frontend**: Next.js 14 (App Router), TypeScript, Tailwind CSS, shadcn/ui
+- **Backend**: Node.js WebSocket server with Express
+- **Database**: Supabase (PostgreSQL with RLS)
+- **Authentication**: Supabase Auth
+- **Email**: Resend or SMTP
+- **Process Management**: PM2, Docker Compose
+
+### Project Structure
+```
+apps/
+├── web/                    # Next.js frontend application
+│   ├── app/               # App Router pages
+│   ├── components/        # Reusable UI components
+│   ├── lib/              # Utilities and configurations
+│   └── hooks/            # Custom React hooks
+│
+├── conductor/             # WebSocket server
+│   └── src/              # Server source code
+│
+packages/
+└── shared/               # Shared types and utilities
+
+scripts/                  # Build and development scripts
+supabase/                # Database migrations and schema
+```
+
+## 🔧 Environment Setup
+
+### Required Environment Variables
+
+**Web App (`apps/web/.env.local`):**
+```bash
+# Supabase Configuration
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+
+# Application URLs
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+NEXT_PUBLIC_CONDUCTOR_URL=ws://localhost:8080
+
+# Email Configuration
+EMAIL_PROVIDER=resend
+RESEND_API_KEY=your_resend_api_key
+FROM_EMAIL=noreply@yourdomain.com
+FROM_NAME=Your Company Name
+
+# Development flags
+NEXT_PUBLIC_SKIP_TENANT_CHECK=false
+```
+
+**Conductor Service (`apps/conductor/.env`):**
+```bash
+# Server Configuration
+PORT=8080
+NODE_ENV=development
+
+# CORS Origins
+ALLOWED_ORIGINS=http://localhost:3000,https://yourdomain.com
+
+# External API Keys (Optional)
+DEEPGRAM_API_KEY=your_deepgram_key
+ELEVENLABS_API_KEY=your_elevenlabs_key
+OPENAI_API_KEY=your_openai_key
 ```
 
 ## Run & Background
@@ -110,7 +219,7 @@ packages/
 
 3. On Windows, enable PowerShell script execution:
    ```powershell
-   # Run PowerShell as Administrator
+   # Run PowerShell as Administartor
    Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
    ```
 

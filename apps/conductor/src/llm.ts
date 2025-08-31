@@ -76,7 +76,7 @@ Return JSON:
       throw new Error(`API request failed: ${response.status} ${response.statusText}`);
     }
 
-    const data = await response.json();
+    const data = await response.json() as any;
     const content = data.choices[0]?.message?.content;
     
     if (!content) {

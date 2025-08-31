@@ -1,16 +1,32 @@
 export const logger = {
-  info: (message: string, ...args: any[]) => {
-    console.log(`[${new Date().toISOString()}] INFO: ${message}`, ...args);
+  info: (message: string | object, ...args: any[]) => {
+    if (typeof message === 'object') {
+      console.log(`[${new Date().toISOString()}] INFO:`, message, ...args);
+    } else {
+      console.log(`[${new Date().toISOString()}] INFO: ${message}`, ...args);
+    }
   },
-  warn: (message: string, ...args: any[]) => {
-    console.warn(`[${new Date().toISOString()}] WARN: ${message}`, ...args);
+  warn: (message: string | object, ...args: any[]) => {
+    if (typeof message === 'object') {
+      console.warn(`[${new Date().toISOString()}] WARN:`, message, ...args);
+    } else {
+      console.warn(`[${new Date().toISOString()}] WARN: ${message}`, ...args);
+    }
   },
-  error: (message: string, ...args: any[]) => {
-    console.error(`[${new Date().toISOString()}] ERROR: ${message}`, ...args);
+  error: (message: string | object, ...args: any[]) => {
+    if (typeof message === 'object') {
+      console.error(`[${new Date().toISOString()}] ERROR:`, message, ...args);
+    } else {
+      console.error(`[${new Date().toISOString()}] ERROR: ${message}`, ...args);
+    }
   },
-  debug: (message: string, ...args: any[]) => {
+  debug: (message: string | object, ...args: any[]) => {
     if (process.env.NODE_ENV === 'development') {
-      console.debug(`[${new Date().toISOString()}] DEBUG: ${message}`, ...args);
+      if (typeof message === 'object') {
+        console.debug(`[${new Date().toISOString()}] DEBUG:`, message, ...args);
+      } else {
+        console.debug(`[${new Date().toISOString()}] DEBUG: ${message}`, ...args);
+      }
     }
   }
 };

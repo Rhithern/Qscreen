@@ -32,7 +32,7 @@ export class ElevenLabsClient {
           headers: {
             'Accept': 'audio/mpeg',
             'Content-Type': 'application/json',
-            'xi-api-key': ELEVENLABS_API_KEY
+            ...(ELEVENLABS_API_KEY && { 'xi-api-key': ELEVENLABS_API_KEY })
           },
           body: JSON.stringify({
             text,

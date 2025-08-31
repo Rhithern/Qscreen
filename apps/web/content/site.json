@@ -1,0 +1,111 @@
+{
+  "brand": {
+    "name": "InterviewPro",
+    "tagline": "Interview your candidates, live and online."
+  },
+  "header": {
+    "menus": [
+      {
+        "label": "Products",
+        "items": [
+          { "label": "Interview Studio", "href": "/products/studio", "description": "Create and manage interview sessions" },
+          { "label": "Realtime Interview", "href": "/products/realtime", "description": "Live candidate conversations" },
+          { "label": "Review Dashboard", "href": "/products/dashboard", "description": "Evaluate and score candidates" }
+        ]
+      },
+      {
+        "label": "Solutions",
+        "items": [
+          { "label": "Hiring Teams", "href": "/solutions/teams", "description": "For internal recruiting teams" },
+          { "label": "Agencies", "href": "/solutions/agencies", "description": "For recruitment agencies" },
+          { "label": "Startups", "href": "/solutions/startups", "description": "For growing companies" }
+        ]
+      },
+      {
+        "label": "Pricing",
+        "href": "/pricing"
+      },
+      {
+        "label": "Resources",
+        "items": [
+          { "label": "Documentation", "href": "/docs", "description": "API docs and guides" },
+          { "label": "Blog", "href": "/blog", "description": "Latest insights and updates" },
+          { "label": "Help Center", "href": "/help", "description": "Support and tutorials" }
+        ]
+      },
+      {
+        "label": "Company",
+        "items": [
+          { "label": "About", "href": "/about", "description": "Our mission and team" },
+          { "label": "Contact", "href": "/contact", "description": "Get in touch with us" },
+          { "label": "Careers", "href": "/careers", "description": "Join our team" }
+        ]
+      }
+    ]
+  },
+  "hero": {
+    "headline": "Hire Better, Faster",
+    "subheadline": "Connect with candidates through live interviews and make informed hiring decisions with real-time evaluations.",
+    "primaryCta": {
+      "label": "Get started",
+      "href": "/auth/register/employer"
+    },
+    "secondaryCta": {
+      "label": "Contact sales",
+      "href": "/contact"
+    }
+  },
+  "footer": {
+    "columns": [
+      {
+        "title": "Product",
+        "links": [
+          { "label": "Interview Studio", "href": "/products/studio" },
+          { "label": "Realtime Interview", "href": "/products/realtime" },
+          { "label": "Review Dashboard", "href": "/products/dashboard" },
+          { "label": "Pricing", "href": "/pricing" }
+        ]
+      },
+      {
+        "title": "Solutions",
+        "links": [
+          { "label": "Hiring Teams", "href": "/solutions/teams" },
+          { "label": "Agencies", "href": "/solutions/agencies" },
+          { "label": "Startups", "href": "/solutions/startups" }
+        ]
+      },
+      {
+        "title": "Resources",
+        "links": [
+          { "label": "Documentation", "href": "/docs" },
+          { "label": "Blog", "href": "/blog" },
+          { "label": "Help Center", "href": "/help" },
+          { "label": "API Reference", "href": "/docs/api" }
+        ]
+      },
+      {
+        "title": "Company",
+        "links": [
+          { "label": "About", "href": "/about" },
+          { "label": "Contact", "href": "/contact" },
+          { "label": "Careers", "href": "/careers" },
+          { "label": "Press Kit", "href": "/press" }
+        ]
+      },
+      {
+        "title": "Legal",
+        "links": [
+          { "label": "Terms of Service", "href": "/terms" },
+          { "label": "Privacy Policy", "href": "/privacy" },
+          { "label": "Cookie Policy", "href": "/cookies" },
+          { "label": "GDPR", "href": "/gdpr" }
+        ]
+      }
+    ],
+    "social": [
+      { "label": "Twitter", "href": "https://twitter.com/interviewpro", "icon": "twitter" },
+      { "label": "LinkedIn", "href": "https://linkedin.com/company/interviewpro", "icon": "linkedin" },
+      { "label": "GitHub", "href": "https://github.com/interviewpro", "icon": "github" }
+    ]
+  }
+}

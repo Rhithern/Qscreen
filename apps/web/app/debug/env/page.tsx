@@ -25,8 +25,36 @@ export default function DebugEnvPage() {
   const sortedKeys = Object.keys(envVars).sort()
 
   return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold mb-6">Environment Variables Debug</h1>
+    <div className="container mx-auto p-8">
+      <h1 className="text-2xl font-bold mb-6">Debug Dashboard</h1>
+      
+      <div className="grid gap-6 mb-8">
+        <div className="flex space-x-4">
+          <a 
+            href="/api/selfcheck" 
+            target="_blank"
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          >
+            Self Check
+          </a>
+          <a 
+            href="/api/dbcheck" 
+            target="_blank"
+            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+          >
+            DB Check
+          </a>
+          <a 
+            href="http://localhost:8787/health" 
+            target="_blank"
+            className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
+          >
+            Conductor Health
+          </a>
+        </div>
+      </div>
+
+      <h2 className="text-xl font-bold mb-4">Environment Variables</h2>
       <div className="bg-gray-100 p-6 rounded-lg">
         <table className="w-full">
           <thead>

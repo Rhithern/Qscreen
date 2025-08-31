@@ -1,3 +1,4 @@
+import WebSocket from 'ws';
 import { logger } from './logger';
 
 const DEEPGRAM_API_KEY = process.env.DEEPGRAM_API_KEY;
@@ -36,7 +37,7 @@ export class DeepgramClient {
 
       this.ws.onmessage = (event) => {
         try {
-          const data = JSON.parse(event.data);
+          const data = JSON.parse(event.data.toString());
           
           if (data.type === 'Results') {
             const transcript = data.channel?.alternatives?.[0]?.transcript;
