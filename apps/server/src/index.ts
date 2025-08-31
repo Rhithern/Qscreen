@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import express, { Express } from 'express';
 import cors from 'cors';
+import path from 'path';
 
 const app: Express = express();
 const PORT = parseInt(process.env.PORT || '3001', 10);
@@ -19,6 +20,22 @@ app.use(cors({
 }));
 
 app.use(express.json());
+
+// Serve React SPA from public directory
+app.use(express.static(path.join(process.cwd(), "public"), { maxAge: "1h" }));
+
+// Serve embed SDK from CDN route
+app.use('/cdn/embed', express.static(path.join(__dirname, '../../../packages/embed-sdk/dist'), {
+  maxAge: '1y',
+  etag: true,
+  setHeaders: (res, filePath) => {
+    if (filePath.endsWith('.js')) {
+      res.setHeader('Content-Type', 'application/javascript');
+    }
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET');
+  }
+}));
 
 // Health check endpoints
 app.get('/api/health', (req, res) => {
@@ -61,6 +78,11 @@ app.get('/', (req, res) => {
       config: '/api/embed/config'
     }
   });
+});
+
+// SPA fallback for all non-API routes
+app.get(/^(?!\/api\/).*/, (_req, res) => {
+  res.sendFile(path.join(process.cwd(), "public", "index.html"));
 });
 
 // Start server

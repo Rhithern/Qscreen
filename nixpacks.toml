@@ -1,20 +1,23 @@
 [variables]
 NIXPACKS_NO_CACHE = '1'
+NIXPACKS_METADATA = "node=20,pnpm=latest"
+FORCE_REBUILD = "2024-12-31-v8"
 
 [phases.setup]
-nixPkgs = ['nodejs_20', 'pnpm']
+nixPkgs = ["nodejs-20_x", "pnpm"]
 
 [phases.install]
 cmds = [
-  'echo "Force rebuild timestamp: $(date)"',
-  'pnpm install --no-frozen-lockfile --force'
+  "pnpm install --no-frozen-lockfile --force"
 ]
 
 [phases.build]
 cmds = [
-  'echo "Building with nixpacks - no Docker"',
-  'pnpm run build:railway'
+  "pnpm -r --filter \"./frontend\" build",
+  "pnpm -r --filter \"./apps/server\" build",
+  "rm -rf apps/server/public && mkdir -p apps/server/public",
+  "cp -r frontend/dist/* apps/server/public/"
 ]
 
 [start]
-cmd = 'pnpm run start:railway'
+cmd = "node apps/server/dist/index.js"
