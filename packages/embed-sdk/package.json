@@ -2,6 +2,7 @@
   "name": "@ai-interviewer/embed-sdk",
   "version": "1.0.0",
   "description": "Embeddable AI interview widget SDK",
+  "type": "module",
   "main": "dist/embed.js",
   "module": "dist/embed.esm.js",
   "umd:main": "dist/embed.umd.js",
