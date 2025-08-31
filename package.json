@@ -3,6 +3,8 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
+    "build:railway": "pnpm --filter @ai-interviewer/embed-sdk build && pnpm --filter @ai-interviewer/server build",
+    "start:railway": "pnpm --filter @ai-interviewer/server start",
     "dev": "concurrently \"pnpm dev:server\" \"pnpm dev:frontend\"",
     "dev:server": "pnpm --filter @ai-interviewer/server dev",
     "dev:frontend": "pnpm --filter @ai-interviewer/frontend dev",
@@ -34,6 +36,8 @@
     "concurrently": "^8.2.2",
     "dotenv-cli": "^7.4.4",
     "pm2": "^5.4.3",
+    "prettier": "^3.0.0",
+    "turbo": "^1.13.0",
     "tsx": "^4.20.5",
     "typescript": "^5.9.2",
     "vitest": "^1.0.0",

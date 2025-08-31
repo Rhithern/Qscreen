@@ -337,14 +337,18 @@ SUPABASE_SERVICE_ROLE_KEY=your_production_service_role_key
 # Build all packages
 pnpm build
 
-# Deploy web app (Vercel example)
+# Deploy to Railway (recommended)
+# See detailed guide: docs/railway-deployment.md
+railway login
+railway link
+railway up
+
+# Alternative deployments:
+# Deploy web app (Vercel)
 cd apps/web && vercel deploy
 
-# Deploy server (Railway example)
-cd apps/server && railway deploy
-
-# Deploy conductor (Railway example)
-cd apps/conductor && railway deploy
+# Deploy server (Heroku)
+cd apps/server && git push heroku main
 ```
 
 ### CDN Setup
@@ -415,10 +419,10 @@ curl https://your-domain.com/api/dbcheck
 
 ## 📖 Additional Resources
 
+- [Railway Deployment Guide](./docs/railway-deployment.md)
 - [Embed WebSocket Protocol](./docs/embed-websocket-protocol.md)
 - [Admin API Reference](./docs/admin-api-reference.md)
 - [No-Code Platform Guides](./docs/embed/)
-- [Security Best Practices](./docs/security.md)
 
 ## 🆘 Support
 
