@@ -1,13 +1,18 @@
+[variables]
+NIXPACKS_NO_CACHE = '1'
+
 [phases.setup]
 nixPkgs = ['nodejs_20', 'pnpm']
 
 [phases.install]
 cmds = [
-  'pnpm install --no-frozen-lockfile'
+  'echo "Force rebuild timestamp: $(date)"',
+  'pnpm install --no-frozen-lockfile --force'
 ]
 
 [phases.build]
 cmds = [
+  'echo "Building with nixpacks - no Docker"',
   'pnpm run build:railway'
 ]
 
