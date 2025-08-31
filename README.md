@@ -1,6 +1,14 @@
-# Interview Platform
+# AI Interviewer Platform
 
-A production-ready interview management platform built with Next.js, TypeScript, and WebSocket technology. Features multi-tenant support, role-based access control, real-time communication, and comprehensive email notifications.
+A comprehensive AI-powered interview platform with embeddable widgets for seamless integration.
+
+🔗 **GitHub Repository**: https://github.com/Rhithern/Qscreen
+
+## Quick Links
+- [Complete Setup Guide](./HOW-TO-USE.md)
+- [Embed Documentation](./docs/embed/)
+- [Admin API Reference](./docs/admin-api-reference.md)
+- [WebSocket Protocol](./docs/embed-websocket-protocol.md)
 
 ## 🚀 Quick Start
 

@@ -423,9 +423,9 @@ curl https://your-domain.com/api/dbcheck
 ## 🆘 Support
 
 For technical support:
-- GitHub Issues: [Create an issue](https://github.com/your-org/ai-interviewer/issues)
-- Documentation: [View docs](https://your-domain.com/docs)
-- Email: support@your-domain.com
+- GitHub Repository: [Rhithern/Qscreen](https://github.com/Rhithern/Qscreen)
+- GitHub Issues: [Create an issue](https://github.com/Rhithern/Qscreen/issues)
+- Documentation: Available in `/docs/` directory
 
 ## 📄 License
 
