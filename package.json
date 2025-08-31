@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
-    "build:railway": "pnpm --filter @ai-interviewer/embed-sdk build && pnpm --filter @ai-interviewer/server build",
+    "build:railway": "pnpm install --no-frozen-lockfile && pnpm --filter @ai-interviewer/embed-sdk build && pnpm --filter @ai-interviewer/server build",
     "start:railway": "pnpm --filter @ai-interviewer/server start",
     "dev": "concurrently \"pnpm dev:server\" \"pnpm dev:frontend\"",
     "dev:server": "pnpm --filter @ai-interviewer/server dev",

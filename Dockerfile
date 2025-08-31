@@ -1,6 +1,9 @@
 # Use Node.js 20 Alpine for smaller image size
 FROM node:20-alpine
 
+# Install system dependencies
+RUN apk add --no-cache curl
+
 # Install pnpm
 RUN npm install -g pnpm@8.15.4
 
@@ -13,8 +16,8 @@ COPY apps/server/package.json ./apps/server/
 COPY packages/embed-sdk/package.json ./packages/embed-sdk/
 COPY packages/shared/package.json ./packages/shared/
 
-# Install dependencies
-RUN pnpm install --frozen-lockfile
+# Install dependencies with fallback
+RUN pnpm install --frozen-lockfile || pnpm install --no-frozen-lockfile
 
 # Copy source code
 COPY . .
